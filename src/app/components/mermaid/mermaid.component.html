@@ -5,14 +5,30 @@
     [style.max-height]="maxHeightStyle()"
     alt="Diagram">
 
+  <!--
+    A real Material icon button, in a guest document as well as the host: FsMaterialGuestStyles
+    copies Material's own rules and the theme tokens they read into whichever document this renders
+    in, because Angular puts component styles in the HOST document's head and a guest never reads it.
+
+    The glyph is an SVG projected into <mat-icon>, which is Material's own mechanism — the same one
+    [svgIcon] uses, and Material's stylesheet sizes it for us. NOT the "fullscreen" ligature: that
+    would make this package depend on the consuming app having registered and loaded an icon font,
+    and would mean shipping a webfont link and the generic .material-symbols-outlined class into an
+    author's document. A ligature that does not resolve renders the literal word.
+  -->
   @if (fullscreen()) {
     <button
         mat-icon-button
         type="button"
         class="fs-mermaid-fullscreen"
+        title="Fullscreen"
         aria-label="Fullscreen"
         (click)="openFullscreen()">
-      <mat-icon>fullscreen</mat-icon>
+      <mat-icon aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false">
+          <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"></path>
+        </svg>
+      </mat-icon>
     </button>
   }
 } @else if (error()) {

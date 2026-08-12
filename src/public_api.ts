@@ -10,6 +10,12 @@ export {
 
 export { FsMermaidRenderer } from './app/services/mermaid-renderer.service';
 export { FsMermaidStyles } from './app/services/mermaid-styles.service';
+// Deliberately free of any mermaid dependency, so it can be lifted into a shared package the day
+// @firestitch/syntax-highlighter's copy button needs the same treatment.
+export {
+  FsMaterialGuestStyles,
+  FS_MATERIAL_GUEST_STYLE_ID,
+} from './app/services/material-guest-styles.service';
 
 export { mermaidSvgToDataUrl } from './app/utils/mermaid-svg.util';
 

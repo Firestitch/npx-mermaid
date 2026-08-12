@@ -42,12 +42,38 @@ ${HOST} .fs-mermaid-image{max-width:100%;height:auto;display:inline-block;}
  * the only affordance saying there is more to see. Touch has no hover to reveal it with either.
  */
 /*
- * Position and colour only. The button is left at Material's own size — it centres its glyph with
- * a padding it derives from that size, so resizing it here is what knocks the icon off centre.
+ * Placement, colour and focus ring only. Size, shape, centring and the hover/press state layer are
+ * Angular Material's now, in this document and in a guest document alike — see
+ * FsMaterialGuestStyles. Restating any of them here would fight the real theme in the host and win,
+ * which is the opposite of the point.
+ *
+ * Always visible rather than revealed on hover: the diagram is a static image, so this button is
+ * the only affordance saying there is more to see, and touch has no hover to reveal it with.
+ *
+ * color IS set. Material resolves the icon colour to inherit, and this button's parent is the white
+ * diagram surface this package paints itself — not the surrounding document's text colour, which in
+ * an AI-authored document could be anything, including white.
+ *
+ * outline on :focus-visible IS set, because Material's keyboard-focus affordance is applied by the
+ * CDK's FocusMonitor, which listens on the application document and never sees a keystroke inside a
+ * guest iframe. Material also sets outline:none, so without this a guest button has no focus
+ * indicator at all.
+ *
+ * The button's size can be pinned per-surface by adding --mat-icon-button-state-layer-size here —
+ * Material's own token, so it behaves identically in both documents. Left unset on purpose, so the
+ * trigger matches every other icon button in the consuming app. Never hardcode width/height.
  */
 ${HOST} .fs-mermaid-fullscreen{position:absolute;top:4px;right:4px;
   color:#43474e;opacity:.55;transition:opacity .15s ease;}
 ${HOST} .fs-mermaid-fullscreen:hover{opacity:1;}
+${HOST} .fs-mermaid-fullscreen:focus-visible{opacity:1;outline:2px solid #4ec9b0;outline-offset:0;}
+${HOST} .fs-mermaid-fullscreen .mat-icon{color:inherit;}
+/*
+ * Material sizes a bare svg in an icon button with vertical-align:baseline, which leaves the glyph
+ * sitting on a text baseline inside a 24px overflow:hidden box. As the icon's only child it should
+ * simply fill it.
+ */
+${HOST} .fs-mermaid-fullscreen .mat-icon svg{display:block;width:100%;height:100%;fill:currentColor;}
 
 ${HOST} .fs-mermaid-error{padding:10px 12px;border:1px solid rgba(204,0,0,0.35);border-radius:6px;
   background:rgba(204,0,0,0.06);color:#a00;text-align:left;}

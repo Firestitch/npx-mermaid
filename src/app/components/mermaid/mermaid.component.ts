@@ -14,6 +14,7 @@ import { MatIcon } from '@angular/material/icon';
 
 import { from, of, switchMap } from 'rxjs';
 
+import { FsMaterialGuestStyles } from '../../services/material-guest-styles.service';
 import { FsMermaidRenderer } from '../../services/mermaid-renderer.service';
 import { FsMermaidStyles } from '../../services/mermaid-styles.service';
 import { mermaidSvgToDataUrl } from '../../utils/mermaid-svg.util';
@@ -46,10 +47,21 @@ function cssSize(value: number | string | null | undefined): string | null {
  * every diagram in a page means the scroll dying each time the pointer crosses one. Everything
  * interactive lives in the fullscreen dialog instead, behind the opt-in `fullscreen` input.
  *
- * That input defaults to `false` for the guest-document case. The dialog needs the CDK overlay,
- * which does not behave in a guest document — an overlay's container is appended to the HOST body
- * but positioned from a rect measured in the iframe's viewport, so it lands visibly offset. Left
- * off, nothing here ever opens one.
+ * **Fullscreen works from a guest document too**, which is worth stating because the general
+ * warning about the CDK overlay does not apply here. That warning is about *connected* overlays —
+ * tooltips and menus, positioned from the trigger's `getBoundingClientRect()`, which for a
+ * guest-resident trigger is measured in the iframe's viewport and lands offset. A dialog is
+ * **globally** positioned (`.global().centerHorizontally().centerVertically()`), so it never reads
+ * the trigger's rect: it opens centred in the host document, where the app's Material theme is
+ * loaded and the dialog renders correctly.
+ *
+ * What genuinely does not survive the guest is Material chrome on the TRIGGER — `mat-icon-button`
+ * and `mat-icon` need the theme and the Material Symbols webfont, neither of which a guest document
+ * loads. So the button is a plain `<button>` with an inline glyph, styled from the same injected
+ * stylesheet as everything else here.
+ *
+ * `fullscreen` stays opt-in regardless, because whether a figure should be expandable is the
+ * host's call, not this component's.
  */
 @Component({
   selector: 'fs-mermaid',
@@ -57,11 +69,6 @@ function cssSize(value: number | string | null | undefined): string | null {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  /**
-   * Material renders the button, so there is no hand-rolled chrome here. It is only ever reached
-   * behind `fullscreen`, which is off in the guest document — where Material's own styles and the
-   * icon font are absent anyway.
-   */
   imports: [
     MatIconButton,
     MatIcon,
@@ -97,6 +104,7 @@ export class FsMermaidComponent {
 
   private readonly _renderer = inject(FsMermaidRenderer);
   private readonly _styles = inject(FsMermaidStyles);
+  private readonly _materialStyles = inject(FsMaterialGuestStyles);
   private readonly _el = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly _dialog = inject(MatDialog);
 
@@ -125,7 +133,13 @@ export class FsMermaidComponent {
   public readonly maxWidthStyle = computed(() => cssSize(this.maxWidth()));
 
   constructor() {
-    this._styles.ensure(this._el.nativeElement.ownerDocument);
+    const doc = this._el.nativeElement.ownerDocument;
+
+    this._styles.ensure(doc);
+    // Unconditional rather than gated on `fullscreen()`: a signal input read in the constructor
+    // sees its default, not the binding. It is a few kilobytes of `.mat-*`-scoped rules in a
+    // document that is already rendering a diagram, and a no-op in the host document.
+    this._materialStyles.ensure(doc);
   }
 
   /**
