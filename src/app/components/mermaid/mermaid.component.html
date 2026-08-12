@@ -1,5 +1,20 @@
 @if (src(); as url) {
-  <img class="fs-mermaid-image" [src]="url" alt="Diagram">
+  <img
+    class="fs-mermaid-image"
+    [src]="url"
+    [style.max-height]="maxHeightStyle()"
+    alt="Diagram">
+
+  @if (fullscreen()) {
+    <button
+        mat-icon-button
+        type="button"
+        class="fs-mermaid-fullscreen"
+        aria-label="Fullscreen"
+        (click)="openFullscreen()">
+      <mat-icon>fullscreen</mat-icon>
+    </button>
+  }
 } @else if (error()) {
   <div class="fs-mermaid-error">
     <div class="fs-mermaid-error__title">Diagram error</div>

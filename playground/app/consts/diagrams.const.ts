@@ -174,6 +174,37 @@ Layout,SVG string,40
 SVG string,Data URL,25
 SVG string,Discarded,15`;
 
+/**
+ * A deliberately tall diagram — a ~2000px column, comfortably past the 1000px `maxHeight` default,
+ * so the playground shows what the cap actually does: the diagram is scaled down to fit it rather
+ * than cropped, and fullscreen is where you go to read it at size.
+ */
+export const TALL = `flowchart TD
+  A[Source authored] --> B[Renderer receives source]
+  B --> C[Mermaid parses]
+  C --> D[Layout engine runs]
+  D --> E[Edges routed]
+  E --> F[Labels placed]
+  F --> G[SVG string emitted]
+  G --> H[Fonts inlined]
+  H --> I[Theme CSS applied]
+  I --> J[SVG serialized]
+  J --> K[Encoded as data URL]
+  K --> L[Bound to the img]
+  L --> M[Browser decodes]
+  M --> N[Intrinsic size read]
+  N --> O[maxHeight applied]
+  O --> P[Scaled to fit]
+  P --> Q[Painted inline]
+  Q --> R[Fullscreen button shown]
+  R --> S[Reader clicks it]
+  S --> T[Dialog opens stretch]
+  T --> U[Zoom pan mounts]
+  U --> V[Image loads]
+  V --> W[Fit on both axes]
+  W --> X[Reader zooms in]
+  X --> Y[Dialog closed]`;
+
 /** Deliberately broken, so the error panel is on the page next to the diagrams it stands in for. */
 export const PARSE_ERROR = `flowchart TD
   A[Unquoted (parens) break this] --> B`;

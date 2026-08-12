@@ -1,0 +1,66 @@
+<!-- `stretch` is fs-dialog's own near-fullscreen mode; it sizes the panel and makes fs-dialog a
+     full-height flex column, so the surface below only has to claim the remaining row -->
+<fs-dialog [mode]="'stretch'">
+  <fs-dialog-title [close]="true">
+    {{ data.title || 'Diagram' }}
+  </fs-dialog-title>
+
+  <div class="fs-mermaid-dialog-surface">
+    <!-- wheel zooms outright: fullscreen there is nothing behind the diagram left to scroll -->
+    <fs-zoom-pan
+        [wheel]="'always'"
+        [zoomMin]=".1"
+        [zoomMax]="4"
+        [zoomFactor]=".2"
+        [zoomFit]="true"
+        [fitMode]="'both'"
+        [fitPadding]="fitPadding"
+        [fitMaxScale]="1"
+        (zoomed)="zoomed($event)">
+      <img
+        class="fs-mermaid-dialog-image"
+        [src]="data.src"
+        (load)="fit()"
+        alt="Diagram">
+    </fs-zoom-pan>
+
+    <div class="fs-mermaid-dialog-toolbar">
+      <button
+          mat-icon-button
+          type="button"
+          title="Zoom out"
+          aria-label="Zoom out"
+          (click)="zoomOut()">
+        <mat-icon>zoom_out</mat-icon>
+      </button>
+      <button
+          mat-icon-button
+          type="button"
+          title="Zoom in"
+          aria-label="Zoom in"
+          (click)="zoomIn()">
+        <mat-icon>zoom_in</mat-icon>
+      </button>
+      <span class="fs-mermaid-dialog-toolbar-scale">
+        {{ scaleLabel() }}
+      </span>
+      <span class="fs-mermaid-dialog-toolbar-separator"></span>
+      <button
+          mat-icon-button
+          type="button"
+          title="Fit"
+          aria-label="Fit"
+          (click)="fit()">
+        <mat-icon>fit_screen</mat-icon>
+      </button>
+      <button
+          mat-icon-button
+          type="button"
+          title="Reset"
+          aria-label="Reset"
+          (click)="reset()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
+  </div>
+</fs-dialog>

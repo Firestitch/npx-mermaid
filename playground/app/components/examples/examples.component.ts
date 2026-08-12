@@ -19,6 +19,7 @@ import {
   SANKEY,
   SEQUENCE,
   STATE,
+  TALL,
   TIMELINE,
   XY_CHART,
 } from '../../consts/diagrams.const';
@@ -53,6 +54,7 @@ export class ExamplesComponent {
   public readonly gitGraph = GIT_GRAPH;
   public readonly block = BLOCK;
   public readonly sankey = SANKEY;
+  public readonly tall = TALL;
   public readonly parseError = PARSE_ERROR;
 
 }

@@ -1,0 +1,70 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+/// fs-dialog in `stretch` mode is a full-height flex column whose children are whatever was
+/// projected into it, so the surface claims the row the title leaves behind. min-height: 0 is what
+/// lets it shrink below its content instead of pushing the dialog past the bottom of the screen.
+.fs-mermaid-dialog-surface {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  /// Mermaid draws a light-theme SVG, so the surface supplies a light ground of its own rather
+  /// than inherit whatever the dialog sits on.
+  background: #fff;
+}
+
+fs-zoom-pan {
+  height: 100%;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.fs-mermaid-dialog-image {
+  display: block;
+  max-width: none;
+}
+
+.fs-mermaid-dialog-toolbar {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0;
+  border: 1px solid #dfe2e8;
+  /// Half the button, so the bar's ends are concentric with the round buttons that sit flush
+  /// against them. Derived from the button's own size rather than hardcoded, so a density change
+  /// carries the bar with it.
+  border-radius: calc(var(--mdc-icon-button-state-layer-size, 48px) / 2);
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .12);
+
+  /// Colour only — the buttons keep Material's own size, which is what keeps their glyphs centred.
+  .mat-mdc-icon-button {
+    color: #43474e;
+  }
+}
+
+.fs-mermaid-dialog-toolbar-scale {
+  min-width: 42px;
+  padding: 0 4px;
+  color: #43474e;
+  font-size: 12px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+
+.fs-mermaid-dialog-toolbar-separator {
+  width: 1px;
+  height: 18px;
+  margin: 0 4px;
+  background: #dfe2e8;
+}

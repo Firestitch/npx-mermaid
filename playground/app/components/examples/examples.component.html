@@ -1,69 +1,135 @@
 <fs-examples [config]="config">
   <fs-example name="Flowchart">
-    <fs-mermaid [source]="flowchart"></fs-mermaid>
+    <fs-mermaid
+      [source]="flowchart"
+      [fullscreen]="true">
+    </fs-mermaid>
   </fs-example>
 
   <fs-example name="Flowchart with subgraphs">
-    <fs-mermaid [source]="flowchartSubgraph"></fs-mermaid>
+    <fs-mermaid
+      [source]="flowchartSubgraph"
+      [fullscreen]="true">
+    </fs-mermaid>
   </fs-example>
 
   <fs-example name="Sequence">
-    <fs-mermaid [source]="sequence"></fs-mermaid>
+    <fs-mermaid
+      [source]="sequence"
+      [fullscreen]="true">
+    </fs-mermaid>
   </fs-example>
 
   <fs-example name="Class">
-    <fs-mermaid [source]="classDiagram"></fs-mermaid>
+    <fs-mermaid
+      [source]="classDiagram"
+      [fullscreen]="true">
+    </fs-mermaid>
   </fs-example>
 
   <fs-example name="State">
-    <fs-mermaid [source]="state"></fs-mermaid>
+    <fs-mermaid
+      [source]="state"
+      [fullscreen]="true">
+    </fs-mermaid>
   </fs-example>
 
   <fs-example name="Entity relationship">
-    <fs-mermaid [source]="entityRelationship"></fs-mermaid>
+    <fs-mermaid
+      [source]="entityRelationship"
+      [fullscreen]="true">
+    </fs-mermaid>
   </fs-example>
 
   <fs-example name="User journey">
-    <fs-mermaid [source]="journey"></fs-mermaid>
+    <fs-mermaid
+      [source]="journey"
+      [fullscreen]="true">
+    </fs-mermaid>
   </fs-example>
 
   <fs-example name="Gantt">
-    <fs-mermaid [source]="gantt"></fs-mermaid>
+    <fs-mermaid
+      [source]="gantt"
+      [fullscreen]="true">
+    </fs-mermaid>
   </fs-example>
 
   <fs-example name="Pie">
-    <fs-mermaid [source]="pie"></fs-mermaid>
+    <fs-mermaid
+      [source]="pie"
+      [fullscreen]="true">
+    </fs-mermaid>
   </fs-example>
 
   <fs-example name="Quadrant">
-    <fs-mermaid [source]="quadrant"></fs-mermaid>
+    <fs-mermaid
+      [source]="quadrant"
+      [fullscreen]="true">
+    </fs-mermaid>
   </fs-example>
 
   <fs-example name="XY chart">
-    <fs-mermaid [source]="xyChart"></fs-mermaid>
+    <fs-mermaid
+      [source]="xyChart"
+      [fullscreen]="true">
+    </fs-mermaid>
   </fs-example>
 
   <fs-example name="Mindmap">
-    <fs-mermaid [source]="mindmap"></fs-mermaid>
+    <fs-mermaid
+      [source]="mindmap"
+      [fullscreen]="true">
+    </fs-mermaid>
   </fs-example>
 
   <fs-example name="Timeline">
-    <fs-mermaid [source]="timeline"></fs-mermaid>
+    <fs-mermaid
+      [source]="timeline"
+      [fullscreen]="true">
+    </fs-mermaid>
   </fs-example>
 
   <fs-example name="Git graph">
-    <fs-mermaid [source]="gitGraph"></fs-mermaid>
+    <fs-mermaid
+      [source]="gitGraph"
+      [fullscreen]="true">
+    </fs-mermaid>
   </fs-example>
 
   <fs-example name="Block">
-    <fs-mermaid [source]="block"></fs-mermaid>
+    <fs-mermaid
+      [source]="block"
+      [fullscreen]="true">
+    </fs-mermaid>
   </fs-example>
 
   <fs-example name="Sankey">
-    <fs-mermaid [source]="sankey"></fs-mermaid>
+    <fs-mermaid
+      [source]="sankey"
+      [fullscreen]="true">
+    </fs-mermaid>
+  </fs-example>
+
+  <fs-example name="Tall — capped at the 1000px maxHeight default">
+    <fs-mermaid
+      [source]="tall"
+      [fullscreen]="true">
+    </fs-mermaid>
+  </fs-example>
+
+  <fs-example name="Tall — uncapped, for comparison">
+    <fs-mermaid
+      [source]="tall"
+      [maxHeight]="'none'"
+      [fullscreen]="true">
+    </fs-mermaid>
   </fs-example>
 
   <fs-example name="Parse error">
-    <fs-mermaid [source]="parseError"></fs-mermaid>
+    <fs-mermaid
+      [source]="parseError"
+      [fullscreen]="true">
+    </fs-mermaid>
   </fs-example>
 </fs-examples>

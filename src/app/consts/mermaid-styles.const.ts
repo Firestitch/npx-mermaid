@@ -22,8 +22,21 @@ const HOST = 'fs-mermaid.fs-mermaid';
  * otherwise win on equal specificity.
  */
 export const FS_MERMAID_STYLES = `
-${HOST}{display:block;margin:16px 0;text-align:center;}
+/* position:relative anchors the fullscreen button, which is absolutely placed in the top right. */
+${HOST}{display:block;position:relative;margin:16px 0;text-align:center;}
 ${HOST} .fs-mermaid-image{max-width:100%;height:auto;display:inline-block;}
+
+/*
+ * Always visible rather than revealed on hover: the diagram is a static image, so this button is
+ * the only affordance saying there is more to see. Touch has no hover to reveal it with either.
+ */
+/*
+ * Position and colour only. The button is left at Material's own size — it centres its glyph with
+ * a padding it derives from that size, so resizing it here is what knocks the icon off centre.
+ */
+${HOST} .fs-mermaid-fullscreen{position:absolute;top:4px;right:4px;
+  color:#43474e;opacity:.55;transition:opacity .15s ease;}
+${HOST} .fs-mermaid-fullscreen:hover{opacity:1;}
 
 ${HOST} .fs-mermaid-error{padding:10px 12px;border:1px solid rgba(204,0,0,0.35);border-radius:6px;
   background:rgba(204,0,0,0.06);color:#a00;text-align:left;}
