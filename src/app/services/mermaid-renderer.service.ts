@@ -72,6 +72,17 @@ export class FsMermaidRenderer {
         fontFamily,
         fontSize: FS_MERMAID_FONT_SIZE,
         /**
+         * Mermaid draws edges as a `curveBasis` B-spline, which APPROXIMATES the points it is
+         * given rather than passing through them. One of those points is where the layout put the
+         * edge's label — so the drawn line drifts off the label it belongs to, by an amount that
+         * depends on how sharply that particular edge turns. Two labels on a symmetric branch come
+         * out differently: one sits on its line, the other has the line clipping its corner.
+         *
+         * `catmullRom` interpolates instead: the curve is still smooth, but it goes THROUGH every
+         * point, so a label is always centred on its own line and the gap it cuts lands there too.
+         */
+        flowchart: { curve: 'catmullRom' },
+        /**
          * We render our own error panel, and without this mermaid renders one too — and leaves it
          * behind. `render()` builds its scratch element on `document.body`; on a parse error it
          * draws its "Syntax error in text" graphic into that element and rethrows WITHOUT removing
