@@ -1,0 +1,8 @@
+@if (src(); as url) {
+  <img class="fs-mermaid-image" [src]="url" alt="Diagram">
+} @else if (error(); as message) {
+  <div class="fs-mermaid-error">
+    <div class="fs-mermaid-error__title">Diagram error</div>
+    <pre class="fs-mermaid-error__message">{{ message }}</pre>
+  </div>
+}
