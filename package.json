@@ -46,6 +46,7 @@
     "@firestitch/component-tools": "^18.0.16",
     "@firestitch/core": "^18.0.1",
     "@firestitch/example": "^18.0.7",
+    "@firestitch/iframe": "^18.1.1",
     "@firestitch/lint": "^18.0.19",
     "@firestitch/message": "^18.0.2",
     "@firestitch/style": "^18.0.54",

@@ -35,6 +35,8 @@ import { mermaidSvgToDataUrl } from '../../utils/mermaid-svg.util';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   standalone: true,
+  // Same name as the element, purely so the injected stylesheet can out-specify ambient CSS.
+  host: { class: 'fs-mermaid' },
 })
 export class FsMermaidComponent {
 

@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
 
+import {
+  FS_MERMAID_FONT_SIZE,
+  FS_MERMAID_THEME_CSS,
+  FS_MERMAID_THEME_VARIABLES,
+} from '../consts/mermaid-theme.const';
+import { documentFontFamily } from '../utils/mermaid-font.util';
+
 
 /** A rendered diagram, or the parse error that stopped it. */
 export interface FsMermaidRenderResult {
@@ -41,9 +48,29 @@ export class FsMermaidRenderer {
 
   private _load(): Promise<typeof import('mermaid').default> {
     this._mermaid = this._mermaid ?? import('mermaid').then((module) => {
+      /**
+       * Read here rather than at module load: the stylesheet that sets the application's font may
+       * not have been applied yet when this file is first evaluated, and `initialize` runs once,
+       * so a font read too early is the font every diagram is stuck with.
+       */
+      const fontFamily = documentFontFamily();
+
       module.default.initialize({
         startOnLoad: false,
         securityLevel: 'loose',
+        /**
+         * `base` is the only built-in theme that keeps what `themeVariables` sets; the others
+         * derive their own palette from a seed colour and overwrite most of it.
+         */
+        theme: 'base',
+        themeVariables: {
+          ...FS_MERMAID_THEME_VARIABLES,
+          fontFamily,
+          fontSize: `${FS_MERMAID_FONT_SIZE}px`,
+        },
+        themeCSS: FS_MERMAID_THEME_CSS,
+        fontFamily,
+        fontSize: FS_MERMAID_FONT_SIZE,
         /**
          * We render our own error panel, and without this mermaid renders one too — and leaves it
          * behind. `render()` builds its scratch element on `document.body`; on a parse error it
