@@ -22,8 +22,19 @@ const HOST = 'fs-mermaid.fs-mermaid';
  * otherwise win on equal specificity.
  */
 export const FS_MERMAID_STYLES = `
-/* position:relative anchors the fullscreen button, which is absolutely placed in the top right. */
-${HOST}{display:block;position:relative;margin:16px 0;text-align:center;}
+/*
+ * position:relative anchors the fullscreen button, which is absolutely placed in the top right.
+ *
+ * The white surface is the diagram's own, not the document's. Mermaid draws with the light palette
+ * in FS_MERMAID_THEME_VARIABLES — dark strokes and text on light node fills — so a transparent
+ * host inherits whatever is behind it and the diagram loses contrast the moment that is dark. It is
+ * mounted into surfaces this package does not control and cannot predict: an AI-authored HTML
+ * document, and Crepe's code-block preview panel, which is near-black. Painting the surface here
+ * keeps a diagram legible in all of them, and makes it read as a figure rather than as loose
+ * strokes floating on the page.
+ */
+${HOST}{display:block;position:relative;margin:16px 0;padding:8px;border-radius:6px;
+  background:#fff;text-align:center;box-sizing:border-box;}
 ${HOST} .fs-mermaid-image{max-width:100%;height:auto;display:inline-block;}
 
 /*
@@ -50,6 +61,12 @@ ${HOST} .fs-mermaid-error__title{margin-bottom:6px;font-size:12px;font-weight:60
  * line points at the offending token; centring each line on its own puts the caret nowhere near it,
  * and wrapping breaks the alignment outright.
  */
+/*
+ * background and border are reset rather than left alone: this is a bare <pre>, and the surfaces
+ * this renders in style that element for their own purposes — Crepe's code block paints one a dark
+ * grey, which lands as a slab inside the error panel and makes the message unreadable.
+ */
 ${HOST} .fs-mermaid-error__message{margin:0;overflow-x:auto;white-space:pre;text-align:left;
+  background:transparent;border:0;padding:0;color:inherit;
   font-family:Consolas,'Courier New',monospace;font-size:12.5px;line-height:1.45;}
 `;
